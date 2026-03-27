@@ -170,7 +170,9 @@ function updateProgress() {
   progressFill.style.width = `${percent}%`;
   progressText.textContent = `${percent}%`;
   completedText.textContent = `${completedCount} / ${totalItems}`;
-  heroTitle.textContent = state.projectName.trim() ? `${state.projectName.trim()} Checklist` : "101 Checklist for New Projects";
+  heroTitle.textContent = state.projectName.trim()
+    ? `${state.projectName.trim()} | A Vibe Coding Checklist Nobody Asked For`
+    : "A Vibe Coding Checklist Nobody Asked For";
   renderPhaseSummary();
 }
 

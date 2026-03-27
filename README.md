@@ -1,6 +1,6 @@
-# Vibe Coder Project Checklist
+# A Vibe Coding Checklist Nobody Asked For
 
-A polished, interactive checklist for starting new projects with less chaos and better habits.
+A polished, interactive 101-point checklist for starting new projects with less chaos and better habits.
 
 ## What It Includes
 
