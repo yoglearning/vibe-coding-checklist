@@ -2,6 +2,8 @@
 
 A polished, interactive 101-point checklist for starting new projects with less chaos and better habits.
 
+Live site: `https://yoglearning.github.io/vibe-coding-checklist/`
+
 ## What It Includes
 
 - Project name and project summary fields
@@ -37,6 +39,10 @@ Then open `http://localhost:8000`.
 2. Push this folder to the repository.
 3. Commit to `main`.
 4. Follow `DEPLOY.md` to publish with GitHub Pages if you want a live URL.
+
+## Live Demo
+
+`https://yoglearning.github.io/vibe-coding-checklist/`
 
 ## Notes
 
