@@ -125,6 +125,7 @@ const heroTitle = document.querySelector("#hero-title");
 const projectNameInput = document.querySelector("#project-name");
 const projectSummaryInput = document.querySelector("#project-summary");
 const showCompletedInput = document.querySelector("#show-completed");
+const downloadCsvButton = document.querySelector("#download-csv-button");
 const resetButton = document.querySelector("#reset-button");
 const phaseTemplate = document.querySelector("#phase-template");
 const itemTemplate = document.querySelector("#item-template");
@@ -151,6 +152,58 @@ function loadState() {
 
 function saveState() {
   localStorage.setItem(storageKey, JSON.stringify(state));
+}
+
+function escapeCsvCell(value) {
+  const normalized = String(value ?? "").replace(/\r?\n|\r/g, " ").trim();
+  return `"${normalized.replace(/"/g, '""')}"`;
+}
+
+function buildCsv() {
+  const rows = [
+    ["Project Name", state.projectName],
+    ["Project Summary", state.projectSummary],
+    [],
+    ["Phase", "Type", "Item", "Completed"]
+  ];
+
+  checklistData.forEach((phase, phaseIndex) => {
+    phase.items.forEach((item, itemIndex) => {
+      rows.push([
+        phase.phase,
+        item.type,
+        item.text,
+        state.completed[itemId(phaseIndex, itemIndex)] ? "Yes" : "No"
+      ]);
+    });
+  });
+
+  return rows
+    .map((row) => row.map((cell) => escapeCsvCell(cell)).join(","))
+    .join("\n");
+}
+
+function slugifyFilenamePart(value, fallback) {
+  const slug = String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || fallback;
+}
+
+function downloadCsv() {
+  const csv = buildCsv();
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const projectSlug = slugifyFilenamePart(state.projectName, "new-project");
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = `${projectSlug}-vibe-coding-checklist.csv`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
 }
 
 function renderPhaseSummary() {
@@ -258,6 +311,10 @@ function attachControls() {
       saveState();
       applyFilters();
     });
+  });
+
+  downloadCsvButton.addEventListener("click", () => {
+    downloadCsv();
   });
 
   resetButton.addEventListener("click", () => {
