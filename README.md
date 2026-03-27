@@ -2,7 +2,7 @@
 
 A polished, interactive 101-point checklist for starting new projects with less chaos and better habits.
 
-Live site: `https://yoglearning.github.io/vibe-coding-checklist/`
+Live site: [Useless Vibe Coding Checklist](https://yoglearning.github.io/vibe-coding-checklist/)
 
 ## What It Includes
 
