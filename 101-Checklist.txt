@@ -1,0 +1,212 @@
+Key
+[G] – Generic: a universal best-practice item you can usually apply as written.
+
+[P] – Project-specific: customize this item for the project you are starting.
+
+Phase 1: Vision & Foundation
+[P] Define the core problem your product solves: {problem_statement}
+
+[P] Identify your target audience: {audience}
+
+[P] Articulate the unique value proposition: {value_proposition}
+
+[P] Decide platform: {web / mobile / both}
+
+[P] Choose tech stack (frontend, backend, database): {stack}
+
+[P] List compliance/security requirements: {e.g., GDPR, HIPAA}
+
+[G] Create a Product Requirements Document (PRD) using an AI assistant.
+
+[P] List must‑have features for the MVP: {list}
+
+[P] List should‑have features for next iteration: {list}
+
+[P] List could‑have features for later: {list}
+
+[P] Document user flows step‑by‑step (e.g., entry → action → exit): {flows}
+
+[P] Describe each main screen/view in text (or rough wireframes): {descriptions}
+
+[P] Explicitly state what is out of scope for this version: {items}
+
+[G] Define code style rules (naming conventions, formatting, etc.).
+
+[G] Specify testing requirements (e.g., unit tests, integration tests).
+
+[G] Adopt accessibility (WCAG 2.2 AA) as a non‑negotiable standard.
+
+[G] Create a .cursorrules or CLAUDE.md file with project conventions.
+
+[P] Clone a template repository matching {stack} (or start from scratch).
+
+[G] Set up local development environment (dependencies, env vars).
+
+[G] Ensure the project runs with a single command (e.g., npm run dev).
+
+Phase 2: Prompting & Iterative Development
+[G] Start each new feature with a fresh chat session.
+
+[G] Write prompts that are specific, structured, and goal‑oriented.
+
+[G] Always provide relevant file paths and existing code snippets.
+
+[G] Use phrases like “think step‑by‑step” to encourage reasoning.
+
+[G] Break complex features into a sequence of 3–5 smaller tasks.
+
+[G] Ask for a plan before implementation: “Outline how you would build X.”
+
+[G] Request code in small, verifiable increments.
+
+[G] After each AI response, run the app and test manually.
+
+[G] If the AI introduces unrelated changes, ask: “Only modify filename.js.”
+
+[G] Use explicit instructions: “Do not change any other files.”
+
+[G] Ask the AI to explain code you don’t understand.
+
+[G] When stuck, paste the exact error message back into the AI.
+
+[G] Tell the AI what you expected vs. what happened.
+
+[G] Iterate: apply a fix, test, and if it fails, repeat with the new outcome.
+
+[G] Keep a list of working prompts that you reuse for similar tasks.
+
+[G] Use the AI to generate mock data or seed files for testing.
+
+[G] Ask the AI to add inline comments for complex logic.
+
+[G] Request code that follows your pre‑defined style guide.
+
+[G] Use the AI to refactor as you go: “Simplify this function.”
+
+[P] For UI, ask for responsive design with {CSS framework}.
+
+[G] Verify that the AI uses the correct version of libraries (pin versions).
+
+[G] Ask for error boundaries or graceful fallbacks where needed.
+
+[G] Prompt the AI to add loading states and skeleton screens.
+
+[G] Use the AI to generate commit messages after a successful feature.
+
+[G] When you hit a dead end, revert to a previous commit and re‑prompt with new context.
+
+Phase 3: Testing & Quality Assurance
+[G] Write tests as you develop, not at the end.
+
+[G] Ask the AI: “Write unit tests for this utility function.”
+
+[G] Run tests after every significant change.
+
+[G] Use the AI to generate integration tests for API endpoints.
+
+[G] Manually test edge cases (empty states, invalid inputs, slow networks).
+
+[G] Test on different screen sizes and devices.
+
+[G] Ask the AI to identify potential accessibility violations.
+
+[G] Use a screen reader to test critical user flows.
+
+[G] Verify keyboard navigation works everywhere.
+
+[G] Check color contrast using browser dev tools.
+
+[G] Run Lighthouse audits and address any scores below 90.
+
+[G] Ask the AI: “What security risks exist in this code?”
+
+[G] Ensure no secrets are hardcoded (use .env files).
+
+[G] Validate and sanitize all user inputs on both client and server.
+
+[G] Ask the AI to add rate limiting or CAPTCHA where appropriate.
+
+[G] Review generated code for performance anti‑patterns (e.g., unnecessary re‑renders).
+
+[G] Use browser performance tools to identify bottlenecks.
+
+[G] Ask the AI: “Optimize this query or component for speed.”
+
+[G] Keep an eye on bundle size; ask the AI to lazy‑load heavy modules.
+
+[G] Document any known issues or limitations for future maintenance.
+
+Phase 4: Version Control & Deployment
+[G] Initialize a Git repository on day one.
+
+[P] Create a .gitignore file appropriate for {stack}.
+
+[G] Commit after every successfully implemented feature.
+
+[G] Write clear, conventional commit messages (feat:, fix:, docs:).
+
+[G] Create a develop branch and keep main stable.
+
+[G] Tag milestones (e.g., v0.1.0, mvp-v1).
+
+[G] Push to a remote repository (GitHub, GitLab, etc.) daily.
+
+[G] Deploy to a staging environment as soon as you have a working prototype.
+
+[P] Use hosting platforms like {Vercel / Netlify / Railway / etc.}.
+
+[G] Set up environment variables in your deployment dashboard.
+
+[G] Configure automatic deployments from your main branch.
+
+[G] Test the live staging environment thoroughly.
+
+[G] Invite a friend or colleague to test and gather feedback.
+
+[G] Fix bugs found in staging before merging to main.
+
+[G] Use the AI to help debug staging‑specific issues (CORS, build failures).
+
+[G] Keep a deployment checklist that includes DB migrations, env sync, etc.
+
+[G] After deployment, run smoke tests on the live URL.
+
+[G] Roll back immediately if a critical bug slips through.
+
+[G] Document your deployment process in a DEPLOY.md file.
+
+[G] Celebrate every successful deployment (yes, vibe coding is fun).
+
+Phase 5: Polish, Security & Handover
+[G] Run a final accessibility audit using automated tools and manual testing.
+
+[G] Ask the AI: “List all WCAG 2.2 rules this app might violate.”
+
+[G] Fix any security warnings from dependency scanners (e.g., npm audit).
+
+[G] Ensure all secrets are rotated before final launch.
+
+[G] Ask the AI to generate an API documentation page (if applicable).
+
+[G] Write a short user manual or in‑app help.
+
+[G] Use the AI to draft a README.md with setup, usage, and deployment instructions.
+
+[P] Add a license file ({MIT / Apache / etc.}) if open‑sourcing.
+
+[G] Remove all console.log statements and debug code.
+
+[G] Ask the AI to suggest final performance improvements.
+
+[G] Run a final full‑flow test covering all must‑have features.
+
+[G] Prepare a launch announcement (social media, email, etc.).
+
+[G] Set up basic analytics to track usage.
+
+[G] Create a feedback channel (GitHub Issues, Discord, etc.).
+
+[G] After launch, review what worked and what didn’t; update your .cursorrules accordingly.
+
+[G] Breathe. You’ve vibe‑coded a full product. Go celebrate with a walk outside.
+
