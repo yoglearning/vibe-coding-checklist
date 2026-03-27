@@ -118,13 +118,13 @@ Phase 3: Testing & Quality Assurance
 
 [G] Run Lighthouse audits and address any scores below 90.
 
-[G] Ask the AI: “What security risks exist in this code?”
+[G] Ask the AI: “What security risks could leak data, expose secrets, or weaken access control in this code?”
 
-[G] Ensure no secrets are hardcoded (use .env files).
+[G] Ensure no secrets, tokens, API keys, or credentials are hardcoded, committed, or exposed client-side; verify they are loaded securely from environment configuration.
 
-[G] Validate and sanitize all user inputs on both client and server.
+[G] Validate, sanitize, and encode all user inputs on both client and server; double-check paths that touch auth, file upload, queries, or rendered content.
 
-[G] Ask the AI to add rate limiting or CAPTCHA where appropriate.
+[G] Ask the AI to add rate limiting, abuse protection, or CAPTCHA where appropriate, and verify the controls cannot be bypassed easily.
 
 [G] Review generated code for performance anti‑patterns (e.g., unnecessary re‑renders).
 
@@ -182,9 +182,9 @@ Phase 5: Polish, Security & Handover
 
 [G] Ask the AI: “List all WCAG 2.2 rules this app might violate.”
 
-[G] Fix any security warnings from dependency scanners (e.g., npm audit).
+[G] Fix or explicitly review every dependency scanner warning (e.g., npm audit), and confirm no unresolved issue can expose data in production.
 
-[G] Ensure all secrets are rotated before final launch.
+[G] Ensure all secrets are rotated before final launch, least-privilege access is enforced, and exposed test credentials are fully revoked.
 
 [G] Ask the AI to generate an API documentation page (if applicable).
 
