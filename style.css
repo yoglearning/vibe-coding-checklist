@@ -299,6 +299,29 @@ h1 {
 .check-input:checked + .check-mark::after { transform: scale(1); }
 
 .check-copy { display: grid; gap: 6px; min-width: 0; }
+.placeholder-group { display: grid; gap: 10px; margin-top: 6px; }
+.placeholder-field { display: grid; gap: 6px; }
+.placeholder-label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.placeholder-input {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.placeholder-input:focus {
+  border-color: rgba(105, 226, 215, 0.7);
+  background: rgba(255,255,255,0.08);
+}
 
 .check-type {
   display: inline-flex;

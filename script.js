@@ -114,7 +114,14 @@ const checklistData = [
 
 const storageKey = "vc-checklist-state-v1";
 const totalItems = 101;
-const state = { projectName: "", projectSummary: "", completed: {}, activeTypeFilter: "all", showCompleted: true };
+const state = {
+  projectName: "",
+  projectSummary: "",
+  completed: {},
+  placeholderValues: {},
+  activeTypeFilter: "all",
+  showCompleted: true
+};
 
 const phaseList = document.querySelector("#phase-list");
 const phaseSummary = document.querySelector("#phase-summary");
@@ -143,6 +150,7 @@ function loadState() {
     state.projectName = parsed.projectName || "";
     state.projectSummary = parsed.projectSummary || "";
     state.completed = parsed.completed || {};
+    state.placeholderValues = parsed.placeholderValues || {};
     state.activeTypeFilter = parsed.activeTypeFilter || "all";
     state.showCompleted = parsed.showCompleted !== false;
   } catch {
@@ -159,6 +167,33 @@ function escapeCsvCell(value) {
   return `"${normalized.replace(/"/g, '""')}"`;
 }
 
+function getPlaceholders(text) {
+  return [...text.matchAll(/\{([^}]+)\}/g)].map((match, index) => ({
+    raw: match[0],
+    label: match[1].trim(),
+    index
+  }));
+}
+
+function placeholderFieldId(itemKey, placeholderIndex) {
+  return `${itemKey}::${placeholderIndex}`;
+}
+
+function resolveItemText(itemText, itemKey) {
+  const placeholders = getPlaceholders(itemText);
+  let resolvedText = itemText;
+
+  placeholders.forEach((placeholder) => {
+    const fieldId = placeholderFieldId(itemKey, placeholder.index);
+    const value = (state.placeholderValues[fieldId] || "").trim();
+    if (value) {
+      resolvedText = resolvedText.replace(placeholder.raw, value);
+    }
+  });
+
+  return resolvedText;
+}
+
 function buildCsv() {
   const rows = [
     ["Project Name", state.projectName],
@@ -169,11 +204,12 @@ function buildCsv() {
 
   checklistData.forEach((phase, phaseIndex) => {
     phase.items.forEach((item, itemIndex) => {
+      const currentItemId = itemId(phaseIndex, itemIndex);
       rows.push([
         phase.phase,
         item.type,
-        item.text,
-        state.completed[itemId(phaseIndex, itemIndex)] ? "Yes" : "No"
+        resolveItemText(item.text, currentItemId),
+        state.completed[currentItemId] ? "Yes" : "No"
       ]);
     });
   });
@@ -262,11 +298,50 @@ function renderChecklist() {
       const id = itemId(phaseIndex, itemIndex);
       const itemNode = itemTemplate.content.firstElementChild.cloneNode(true);
       const checkbox = itemNode.querySelector(".check-input");
+      const checkCopy = itemNode.querySelector(".check-copy");
+      const placeholders = getPlaceholders(item.text);
       itemNode.dataset.type = item.type;
       checkbox.checked = Boolean(state.completed[id]);
       checkbox.dataset.itemId = id;
       itemNode.querySelector(".check-type").textContent = item.type;
       itemNode.querySelector(".check-text").textContent = item.text;
+
+      if (placeholders.length > 0) {
+        const placeholderGroup = document.createElement("div");
+        placeholderGroup.className = "placeholder-group";
+
+        placeholders.forEach((placeholder) => {
+          const fieldId = placeholderFieldId(id, placeholder.index);
+          const field = document.createElement("label");
+          const caption = document.createElement("span");
+          const input = document.createElement("input");
+
+          field.className = "placeholder-field";
+          caption.className = "placeholder-label";
+          caption.textContent = placeholder.label;
+
+          input.className = "placeholder-input";
+          input.type = "text";
+          input.placeholder = `Enter ${placeholder.label}`;
+          input.value = state.placeholderValues[fieldId] || "";
+
+          input.addEventListener("input", (event) => {
+            const value = event.target.value;
+            if (value.trim()) {
+              state.placeholderValues[fieldId] = value;
+            } else {
+              delete state.placeholderValues[fieldId];
+            }
+            saveState();
+          });
+
+          field.appendChild(caption);
+          field.appendChild(input);
+          placeholderGroup.appendChild(field);
+        });
+
+        checkCopy.appendChild(placeholderGroup);
+      }
 
       checkbox.addEventListener("change", (event) => {
         if (event.target.checked) state.completed[id] = true;
